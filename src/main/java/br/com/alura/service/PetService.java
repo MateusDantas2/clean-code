@@ -29,7 +29,7 @@ public class PetService {
 
         String uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
 
-        HttpResponse<String> response = client.disprarRequisicaoGet(uri);
+        HttpResponse<String> response = client.dispararRequisicaoGet(uri);
         int statusCode = response.statusCode();
         if (statusCode == 404 || statusCode == 500) {
             System.out.println("ID ou nome não cadastrado!");
@@ -74,7 +74,7 @@ public class PetService {
             Pet pet = new Pet(tipo, nome, raca, idade, cor, peso);
 
             String uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
-            HttpResponse<String> response = client.disprarRequisicaoPost(uri, pet);
+            HttpResponse<String> response = client.dispararRequisicaoPost(uri, pet);
 
             int statusCode = response.statusCode();
             String responseBody = response.body();

@@ -1,6 +1,5 @@
 package br.com.alura.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,5 +19,12 @@ public class Abrigo {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return """
+                "id":%s,"nome":"%s","telefone":"%s","email":"%s"
+                """.formatted(this.id, this.nome, this.telefone, this.email);
     }
 }

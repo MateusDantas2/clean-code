@@ -14,21 +14,29 @@ import java.util.Scanner;
  * @author Mateus Dantas
  */
 public class AbrigoService {
-    
+
     private final ClientHttpConfiguration client;
-    
+
     public AbrigoService(ClientHttpConfiguration client) {
         this.client = client;
     }
 
     public void listarAbrigo() throws IOException, InterruptedException {
         String uri = "http://localhost:8080/abrigos";
-        HttpResponse<String> response = client.disprarRequisicaoGet(uri);
+        HttpResponse<String> response = client.dispararRequisicaoGet(uri);
         String responseBody = response.body();
         Abrigo[] abrigos = new ObjectMapper().readValue(responseBody, Abrigo[].class);
         List<Abrigo> abrigoList = Arrays.stream(abrigos).toList();
+        if (abrigoList.isEmpty()) {
+            System.out.println("Não há abrigos cadastrados!");
+        } else {
+            mostrarAbrigos(abrigoList);
+        }
+    }
+
+    private void mostrarAbrigos(List<Abrigo> abrigos) {
         System.out.println("Abrigos cadastrados:");
-        for (Abrigo abrigo : abrigoList) {
+        for (Abrigo abrigo : abrigos) {
             Long id = abrigo.getId();
             String nome = abrigo.getNome();
             System.out.println(id + " - " + nome);
@@ -46,7 +54,7 @@ public class AbrigoService {
         Abrigo abrigo = new Abrigo(nome, telefone, email);
 
         String uri = "http://localhost:8080/abrigos";
-        HttpResponse<String> response = client.disprarRequisicaoPost(uri, abrigo);
+        HttpResponse<String> response = client.dispararRequisicaoPost(uri, abrigo);
         int statusCode = response.statusCode();
         String responseBody = response.body();
         if (statusCode == 200) {
